@@ -6,7 +6,7 @@
     <title>Lambda0x63 | Digital Space</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -14,15 +14,16 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Archivo', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif']
+                        sans: ['Syne', 'sans-serif'],
+                        mono: ['IBM Plex Mono', 'monospace']
                     },
                     colors: {
-                        gallery: {
-                            paper: '#f8f9fa',
-                            wall: '#f1f3f5',
-                            dark: '#212529',
-                            accent: '#e9ecef'
+                        space: {
+                            dark: '#0f172a',
+                            blue: '#1e293b',
+                            accent: '#38bdf8',
+                            muted: '#94a3b8',
+                            light: '#f1f5f9'
                         }
                     }
                 }
@@ -31,10 +32,31 @@
     </script>
     <style>
         body {
-            background-color: #f8f9fa;
-            color: #212529;
+            background-color: #0f172a;
+            color: #f1f5f9;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .space-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px 1px rgba(56, 189, 248, 0.2);
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 0 20px 2px rgba(56, 189, 248, 0.3);
+        }
+        
+        .code-panel {
+            background-color: #1e293b;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
         }
         
         .fade-in {
@@ -51,288 +73,261 @@
         .stagger-2 { animation-delay: 0.2s; }
         .stagger-3 { animation-delay: 0.3s; }
         
-        .app-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+        .exhibit {
+            transition: all 0.4s ease;
+            background: #1e293b;
+            border: 1px solid rgba(56, 189, 248, 0.1);
         }
         
-        .exhibit-hover {
-            transition: all 0.5s cubic-bezier(0.2, 0, 0, 1);
+        .exhibit:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
         
-        .exhibit-hover:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
         }
         
-        .smooth-shadow {
-            box-shadow: 
-                0 1px 1px rgba(0,0,0,0.01),
-                0 2px 2px rgba(0,0,0,0.01),
-                0 4px 4px rgba(0,0,0,0.01),
-                0 8px 8px rgba(0,0,0,0.01);
-        }
-        
-        .lambda-bg {
-            background-image: url('https://images.unsplash.com/photo-1544161513-0179fe746fd5?q=80&w=2070');
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .lambda-bg::before {
-            content: "";
+        /* Starfield animation */
+        .starfield {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
         }
         
-        .gallery-cursor {
-            cursor: none;
-        }
-        
-        .custom-cursor {
-            position: fixed;
-            width: 30px;
-            height: 30px;
+        .star {
+            position: absolute;
+            background-color: #fff;
             border-radius: 50%;
-            border: 1px solid rgba(0, 0, 0, 0.3);
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-            z-index: 1000;
-            mix-blend-mode: difference;
+            opacity: 0.2;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
         }
         
-        .cursor-dot {
-            position: fixed;
-            width: 5px;
-            height: 5px;
-            background-color: #212529;
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            transition: transform 0.1s;
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.6; }
         }
     </style>
 </head>
-<body class="font-sans bg-gallery-paper text-gallery-dark overflow-x-hidden">
-    <div class="custom-cursor" id="cursor"></div>
-    <div class="cursor-dot" id="cursor-dot"></div>
+<body class="font-sans text-space-light">
+    <!-- Background with subtle grid -->
+    <div class="fixed inset-0 space-grid -z-10"></div>
     
-    <div class="app-container">
-        <!-- Minimal Header - More like a gallery label -->
-        <header class="fixed top-0 left-0 w-full z-50 bg-gallery-paper bg-opacity-90 backdrop-blur-sm border-b border-gray-100">
-            <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="text-base font-serif font-light opacity-80">Lambda0x63</div>
-                <div class="text-xs uppercase tracking-widest text-gallery-dark opacity-60">Digital Space</div>
-            </div>
-        </header>
-        
-        <!-- Main Content Area -->
-        <main class="flex-grow">
-            <!-- Hero Exhibit -->
-            <section class="w-full h-screen lambda-bg relative flex items-center justify-center px-6">
-                <div class="relative z-10 text-center max-w-2xl mx-auto fade-in">
-                    <h1 class="text-6xl md:text-8xl font-serif font-normal tracking-tight mb-8">λ0x63</h1>
-                    <div class="h-px w-12 bg-gallery-dark opacity-20 mx-auto my-8"></div>
-                    <p class="text-sm tracking-wide text-gallery-dark opacity-70 max-w-lg mx-auto font-light">
-                        A quiet contemplation of code and form
-                    </p>
-                </div>
+    <!-- Starfield background -->
+    <div class="starfield" id="starfield"></div>
+    
+    <!-- Header: Fixed navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-space-dark bg-opacity-80 backdrop-blur-sm border-b border-space-blue">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-medium text-space-light hover:text-space-accent transition-colors">λ0x63</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-sm text-space-muted hover:text-space-accent transition-colors">About</a>
+                <a href="#gallery" class="text-sm text-space-muted hover:text-space-accent transition-colors">Gallery</a>
+                <a href="#contact" class="text-sm text-space-muted hover:text-space-accent transition-colors">Contact</a>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="about" class="min-h-screen flex items-center justify-center px-6 relative">
+            <div class="relative z-10 text-center max-w-3xl mx-auto fade-in">
+                <h1 class="text-6xl md:text-8xl font-bold mb-6 text-space-light tracking-tight leading-none">
+                    Lambda<span class="text-space-accent">0x63</span>
+                </h1>
+                <div class="h-px w-20 bg-space-accent mx-auto my-8"></div>
+                <p class="text-space-muted text-lg md:text-xl max-w-xl mx-auto">
+                    Digital minimalism meets functional elegance
+                </p>
                 
-                <div class="absolute bottom-12 left-0 right-0 flex justify-center fade-in stagger-3">
-                    <a href="#gallery" class="text-xs uppercase tracking-widest text-gallery-dark opacity-50 hover:opacity-100 transition-opacity">
+                <div class="mt-12">
+                    <a href="#gallery" class="inline-block px-6 py-3 bg-space-blue border border-space-accent text-space-accent rounded hover:bg-space-accent hover:text-space-dark transition-all">
                         View Exhibition
                     </a>
                 </div>
-            </section>
-            
-            <!-- Gallery Space -->
-            <section id="gallery" class="bg-white py-32 px-6 md:px-20 gallery-cursor">
-                <div class="max-w-5xl mx-auto">
-                    <!-- Opening Statement -->
-                    <div class="mb-32">
-                        <div class="flex flex-col md:flex-row gap-6 md:gap-16 items-start">
-                            <div class="md:w-1/4">
-                                <span class="text-xs uppercase tracking-wider text-gallery-dark opacity-40">Preface</span>
+            </div>
+        </section>
+        
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-24 px-6 md:px-16">
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-16">
+                    <h2 class="text-3xl font-bold text-space-light">Digital Artifacts</h2>
+                    <div class="h-px w-12 bg-space-accent mt-4"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Exhibit 1 -->
+                    <div class="exhibit rounded-lg p-8 relative overflow-hidden">
+                        <div class="aspect-[4/5] flex flex-col justify-between relative z-10">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs text-space-muted uppercase tracking-wider">01</span>
+                                <span class="text-xs text-space-muted">Function</span>
                             </div>
-                            <div class="md:w-3/4">
-                                <p class="text-lg md:text-xl font-serif font-light leading-relaxed opacity-90">
-                                    This space explores the subtle balance between function and elegance. 
-                                    A showcase of digital minimalism.
+                            
+                            <div class="flex items-center justify-center my-10">
+                                <span class="text-9xl font-bold text-space-accent opacity-20">λ</span>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-xl font-medium text-space-light">Abstraction</h3>
+                                <p class="text-sm text-space-muted mt-2">
+                                    Higher-order function, 2023
                                 </p>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Exhibit Gallery -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
-                        <!-- Exhibit 1 -->
-                        <div class="exhibit-hover bg-gallery-paper p-8 md:p-10 smooth-shadow">
-                            <div class="aspect-[4/5] flex flex-col justify-between">
-                                <div class="flex justify-between items-start">
-                                    <span class="text-xs uppercase tracking-widest opacity-40">01</span>
-                                </div>
-                                
-                                <div class="my-10 flex items-center justify-center">
-                                    <span class="text-8xl md:text-9xl font-serif text-gallery-dark opacity-10">λ</span>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-base font-serif">Abstraction</h3>
-                                    <p class="text-xs tracking-wide opacity-60 mt-1">2023 / Higher-order function</p>
+                    <!-- Exhibit 2 -->
+                    <div class="exhibit rounded-lg p-8 relative overflow-hidden">
+                        <div class="aspect-[4/5] flex flex-col justify-between relative z-10">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs text-space-muted uppercase tracking-wider">02</span>
+                                <span class="text-xs text-space-muted">Code</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-center my-10">
+                                <div class="code-panel p-4 font-mono text-sm text-space-muted">
+                                    <div>const compose = (...fns) => x => </div>
+                                    <div>&nbsp;&nbsp;fns.reduceRight((y, f) => </div>
+                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;f(y), x);</div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- Exhibit 2 -->
-                        <div class="exhibit-hover bg-gallery-paper p-8 md:p-10 smooth-shadow">
-                            <div class="aspect-[4/5] flex flex-col justify-between">
-                                <div class="flex justify-between items-start">
-                                    <span class="text-xs uppercase tracking-widest opacity-40">02</span>
-                                </div>
-                                
-                                <div class="my-10 flex items-center justify-center">
-                                    <div class="text-sm font-mono opacity-30 text-left">
-                                        <div>const compose = (...fns) => x => </div>
-                                        <div>  fns.reduceRight((y, f) => </div>
-                                        <div>    f(y), x);</div>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-base font-serif">Composition</h3>
-                                    <p class="text-xs tracking-wide opacity-60 mt-1">2024 / Functional pattern</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Exhibit 3 -->
-                        <div class="exhibit-hover bg-gallery-paper p-8 md:p-10 smooth-shadow">
-                            <div class="aspect-[4/5] flex flex-col justify-between">
-                                <div class="flex justify-between items-start">
-                                    <span class="text-xs uppercase tracking-widest opacity-40">03</span>
-                                </div>
-                                
-                                <div class="my-10 flex items-center justify-center">
-                                    <span class="text-5xl md:text-6xl font-mono text-gallery-dark opacity-20">0x63</span>
-                                </div>
-                                
-                                <div>
-                                    <h3 class="text-base font-serif">Identity</h3>
-                                    <p class="text-xs tracking-wide opacity-60 mt-1">2022 / Hexadecimal expression</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Exhibit 4: A centered quote -->
-                        <div class="exhibit-hover bg-gallery-paper p-8 md:p-10 smooth-shadow">
-                            <div class="aspect-[4/5] flex flex-col justify-center">
-                                <blockquote class="text-lg md:text-xl font-serif italic opacity-70 text-center px-4">
-                                    "In silence, code speaks<br>its own elegant language."
-                                </blockquote>
+                            
+                            <div>
+                                <h3 class="text-xl font-medium text-space-light">Composition</h3>
+                                <p class="text-sm text-space-muted mt-2">
+                                    Functional pattern, 2024
+                                </p>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Contact Section -->
-                    <div class="mt-32 border-t border-gallery-accent pt-16">
-                        <div class="flex flex-col md:flex-row gap-6 md:gap-16 items-start">
-                            <div class="md:w-1/4">
-                                <span class="text-xs uppercase tracking-wider text-gallery-dark opacity-40">Contact</span>
+                    <!-- Exhibit 3 -->
+                    <div class="exhibit rounded-lg p-8 relative overflow-hidden">
+                        <div class="aspect-[4/5] flex flex-col justify-between relative z-10">
+                            <div class="flex justify-between items-start">
+                                <span class="text-xs text-space-muted uppercase tracking-wider">03</span>
+                                <span class="text-xs text-space-muted">Identity</span>
                             </div>
-                            <div class="md:w-3/4">
-                                <div class="flex flex-col space-y-8">
-                                    <a href="mailto:root39293@gmail.com" class="group flex items-center">
-                                        <span class="text-sm opacity-80 group-hover:opacity-100 transition-opacity">root39293@gmail.com</span>
-                                    </a>
-                                    
-                                    <a href="https://github.com/Lambda0x63" target="_blank" class="group flex items-center">
-                                        <span class="text-sm opacity-80 group-hover:opacity-100 transition-opacity">github.com/Lambda0x63</span>
-                                    </a>
-                                </div>
+                            
+                            <div class="flex items-center justify-center my-10">
+                                <span class="text-6xl font-mono font-bold text-space-accent opacity-30">0x63</span>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-xl font-medium text-space-light">Hexadecimal</h3>
+                                <p class="text-sm text-space-muted mt-2">
+                                    Binary expression, 2022
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Exhibit 4: Featured Quote -->
+                    <div class="exhibit rounded-lg p-8 relative overflow-hidden">
+                        <div class="aspect-[4/5] flex flex-col justify-center relative z-10">
+                            <blockquote class="text-xl md:text-2xl text-space-light italic text-center">
+                                "In the silence between keystrokes,<br>
+                                elegance emerges."
+                            </blockquote>
+                            <p class="text-center text-space-muted text-sm mt-6">— Programming Philosophy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 px-6 md:px-16 bg-space-blue">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-12">
+                    <div class="md:w-1/2">
+                        <h2 class="text-3xl font-bold text-space-light mb-4">Connect</h2>
+                        <div class="h-px w-12 bg-space-accent mb-6"></div>
+                        <p class="text-space-muted max-w-md">
+                            Interested in collaboration or discussion? 
+                            Reach out through the following channels.
+                        </p>
+                    </div>
+                    
+                    <div class="md:w-1/2">
+                        <div class="bg-space-dark p-8 rounded-lg border border-space-blue hover-glow transition-all">
+                            <div class="space-y-6">
+                                <a href="mailto:root39293@gmail.com" class="flex items-center group">
+                                    <div class="w-10 h-10 rounded-full bg-space-blue flex items-center justify-center mr-4">
+                                        <i class="fas fa-envelope text-space-accent"></i>
+                                    </div>
+                                    <span class="text-space-light group-hover:text-space-accent transition-colors">root39293@gmail.com</span>
+                                </a>
+                                
+                                <a href="https://github.com/Lambda0x63" target="_blank" class="flex items-center group">
+                                    <div class="w-10 h-10 rounded-full bg-space-blue flex items-center justify-center mr-4">
+                                        <i class="fab fa-github text-space-accent"></i>
+                                    </div>
+                                    <span class="text-space-light group-hover:text-space-accent transition-colors">github.com/Lambda0x63</span>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
-        
-        <!-- Minimal Footer -->
-        <footer class="py-6 px-6 text-xs text-center opacity-40 border-t border-gallery-accent">
-            © 2025
-        </footer>
-    </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="py-10 px-6 border-t border-space-blue">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-space-muted text-sm mb-4 md:mb-0">
+                © 2025 Lambda0x63. All rights reserved.
+            </div>
+            
+            <div class="flex space-x-6">
+                <a href="#about" class="text-space-muted hover:text-space-accent text-sm transition-colors">About</a>
+                <a href="#gallery" class="text-space-muted hover:text-space-accent text-sm transition-colors">Gallery</a>
+                <a href="#contact" class="text-space-muted hover:text-space-accent text-sm transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Custom cursor for gallery effect
-            const cursor = document.getElementById('cursor');
-            const cursorDot = document.getElementById('cursor-dot');
-            const gallery = document.getElementById('gallery');
+            // Create starfield
+            const starfield = document.getElementById('starfield');
+            const starsCount = 100;
             
-            document.addEventListener('mousemove', (e) => {
-                // Move the cursor elements to follow the mouse
-                cursor.style.left = `${e.clientX}px`;
-                cursor.style.top = `${e.clientY}px`;
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
                 
-                cursorDot.style.left = `${e.clientX}px`;
-                cursorDot.style.top = `${e.clientY}px`;
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
                 
-                // Check if inside gallery section
-                const galleryRect = gallery.getBoundingClientRect();
-                if (
-                    e.clientY >= galleryRect.top && 
-                    e.clientY <= galleryRect.bottom && 
-                    e.clientX >= galleryRect.left && 
-                    e.clientX <= galleryRect.right
-                ) {
-                    cursor.style.width = '40px';
-                    cursor.style.height = '40px';
-                    cursor.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                } else {
-                    cursor.style.width = '30px';
-                    cursor.style.height = '30px';
-                    cursor.style.backgroundColor = 'transparent';
-                }
-            });
-            
-            // Expand cursor when hovering over interactive elements
-            const interactiveElements = document.querySelectorAll('a, button, .exhibit-hover');
-            interactiveElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.style.width = '50px';
-                    cursor.style.height = '50px';
-                    cursor.style.backgroundColor = 'rgba(33, 37, 41, 0.05)';
-                    cursorDot.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                });
+                // Random size (1-3px)
+                const size = Math.random() * 2 + 1;
                 
-                el.addEventListener('mouseleave', () => {
-                    cursor.style.width = '30px';
-                    cursor.style.height = '30px';
-                    cursor.style.backgroundColor = 'transparent';
-                    cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
-                });
-            });
-            
-            // Hide cursor when mouse leaves window
-            document.addEventListener('mouseleave', () => {
-                cursor.style.display = 'none';
-                cursorDot.style.display = 'none';
-            });
-            
-            document.addEventListener('mouseenter', () => {
-                cursor.style.display = 'block';
-                cursorDot.style.display = 'block';
-            });
+                // Random duration and delay for twinkling
+                const duration = (Math.random() * 4 + 3) + 's';
+                const delay = (Math.random() * 5) + 's';
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.setProperty('--duration', duration);
+                star.style.setProperty('--delay', delay);
+                
+                starfield.appendChild(star);
+            }
             
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -345,23 +340,28 @@
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop,
+                            top: targetElement.offsetTop - 70, // Account for fixed header
                             behavior: 'smooth'
                         });
                     }
                 });
             });
             
-            // Toggle visibility of cursor on mobile devices
-            if (window.innerWidth <= 768) {
-                cursor.style.display = 'none';
-                cursorDot.style.display = 'none';
-            }
-            
             // Fade in animations
             const fadeElements = document.querySelectorAll('.fade-in');
             fadeElements.forEach(el => {
                 el.style.opacity = '1';
+            });
+            
+            // Subtle parallax effect on scroll
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const exhibits = document.querySelectorAll('.exhibit');
+                
+                exhibits.forEach((exhibit, index) => {
+                    const speed = 0.03 + (index * 0.01);
+                    exhibit.style.transform = `translateY(${scrollY * speed}px)`;
+                });
             });
         });
     </script>
