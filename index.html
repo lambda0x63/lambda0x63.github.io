@@ -3,243 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lambda0x63 | Digital Space</title>
+    <title>Lambda0x63</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Syne', 'sans-serif'],
-                        mono: ['IBM Plex Mono', 'monospace']
+                        sans: ['Inter', 'sans-serif'],
                     },
-                    colors: {
-                        space: {
-                            dark: '#0f172a',
-                            blue: '#1e293b',
-                            accent: '#38bdf8',
-                            muted: '#94a3b8',
-                            light: '#f1f5f9'
-                        }
-                    }
                 }
             }
         }
     </script>
     <style>
         body {
-            background-color: #0f172a;
-            color: #f1f5f9;
+            background-color: #f5f5f5;
+            color: #1a1a1a;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         
-        .space-grid {
-            background-size: 50px 50px;
-            background-image: 
-                linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
-        }
-        
-        .glow {
-            box-shadow: 0 0 15px 1px rgba(56, 189, 248, 0.2);
-        }
-        
-        .hover-glow:hover {
-            box-shadow: 0 0 20px 2px rgba(56, 189, 248, 0.3);
-        }
-        
-        .code-panel {
-            background-color: #1e293b;
-            border-radius: 4px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease-in-out forwards;
-            opacity: 0;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-        
         .exhibit {
-            transition: all 0.4s ease;
-            background: #1e293b;
-            border: 1px solid rgba(56, 189, 248, 0.1);
+            transition: transform 0.3s ease;
         }
         
         .exhibit:hover {
             transform: translateY(-5px);
-            border-color: rgba(56, 189, 248, 0.3);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .vertical-text {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-        }
-        
-        /* Starfield animation */
-        .starfield {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-        
-        .star {
-            position: absolute;
-            background-color: #fff;
-            border-radius: 50%;
-            opacity: 0.2;
-            animation: twinkle var(--duration) ease-in-out infinite;
-            animation-delay: var(--delay);
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.6; }
         }
     </style>
 </head>
-<body class="font-sans text-space-light">
-    <!-- Background with subtle grid -->
-    <div class="fixed inset-0 space-grid -z-10"></div>
-    
-    <!-- Starfield background -->
-    <div class="starfield" id="starfield"></div>
-    
-    <!-- Header: Fixed navigation -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-space-dark bg-opacity-80 backdrop-blur-sm border-b border-space-blue">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-medium text-space-light hover:text-space-accent transition-colors">λ0x63</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="text-sm text-space-muted hover:text-space-accent transition-colors">About</a>
-                <a href="#gallery" class="text-sm text-space-muted hover:text-space-accent transition-colors">Gallery</a>
-                <a href="#contact" class="text-sm text-space-muted hover:text-space-accent transition-colors">Contact</a>
-            </nav>
+<body class="font-sans text-gray-900">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-white">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-lg font-light">Lambda0x63</div>
+            <a href="https://github.com/Lambda0x63" target="_blank" class="text-sm text-gray-500 hover:text-gray-900">GitHub</a>
         </div>
     </header>
     
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section id="about" class="min-h-screen flex items-center justify-center px-6 relative">
-            <div class="relative z-10 text-center max-w-3xl mx-auto fade-in">
-                <h1 class="text-6xl md:text-8xl font-bold mb-6 text-space-light tracking-tight leading-none">
-                    Lambda<span class="text-space-accent">0x63</span>
-                </h1>
-                <div class="h-px w-20 bg-space-accent mx-auto my-8"></div>
-                <p class="text-space-muted text-lg md:text-xl max-w-xl mx-auto">
-                    Digital minimalism meets functional elegance
+        <section class="h-screen bg-white flex items-center justify-center px-6">
+            <div class="text-center">
+                <h1 class="text-6xl md:text-8xl font-light mb-6">λ0x63</h1>
+                <div class="h-px w-16 bg-black mx-auto my-8 opacity-20"></div>
+                <p class="text-gray-500 max-w-lg mx-auto font-light">
+                    디지털 미니멀리즘
                 </p>
-                
-                <div class="mt-12">
-                    <a href="#gallery" class="inline-block px-6 py-3 bg-space-blue border border-space-accent text-space-accent rounded hover:bg-space-accent hover:text-space-dark transition-all">
-                        View Exhibition
-                    </a>
-                </div>
             </div>
         </section>
         
         <!-- Gallery Section -->
-        <section id="gallery" class="py-24 px-6 md:px-16">
-            <div class="max-w-6xl mx-auto">
+        <section class="py-24 px-6 md:px-16 bg-white">
+            <div class="max-w-7xl mx-auto">
                 <div class="mb-16">
-                    <h2 class="text-3xl font-bold text-space-light">Digital Artifacts</h2>
-                    <div class="h-px w-12 bg-space-accent mt-4"></div>
+                    <div class="flex items-baseline justify-between">
+                        <h2 class="text-2xl font-light">전시</h2>
+                        <p class="text-sm text-gray-500">2025</p>
+                    </div>
+                    <div class="h-px w-full bg-gray-200 mt-4"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Exhibit 1 -->
-                    <div class="exhibit rounded-lg p-8 relative overflow-hidden">
-                        <div class="aspect-[4/5] flex flex-col justify-between relative z-10">
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs text-space-muted uppercase tracking-wider">01</span>
-                                <span class="text-xs text-space-muted">Function</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-center my-10">
-                                <span class="text-9xl font-bold text-space-accent opacity-20">λ</span>
-                            </div>
-                            
-                            <div>
-                                <h3 class="text-xl font-medium text-space-light">Abstraction</h3>
-                                <p class="text-sm text-space-muted mt-2">
-                                    Higher-order function, 2023
-                                </p>
-                            </div>
+                    <div class="exhibit bg-gray-50 p-8">
+                        <div class="aspect-square flex flex-col justify-center items-center">
+                            <span class="text-8xl text-gray-300">λ</span>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium">Lambda</h3>
+                            <p class="text-xs text-gray-500 mt-1">2023</p>
                         </div>
                     </div>
                     
                     <!-- Exhibit 2 -->
-                    <div class="exhibit rounded-lg p-8 relative overflow-hidden">
-                        <div class="aspect-[4/5] flex flex-col justify-between relative z-10">
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs text-space-muted uppercase tracking-wider">02</span>
-                                <span class="text-xs text-space-muted">Code</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-center my-10">
-                                <div class="code-panel p-4 font-mono text-sm text-space-muted">
-                                    <div>const compose = (...fns) => x => </div>
-                                    <div>&nbsp;&nbsp;fns.reduceRight((y, f) => </div>
-                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;f(y), x);</div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <h3 class="text-xl font-medium text-space-light">Composition</h3>
-                                <p class="text-sm text-space-muted mt-2">
-                                    Functional pattern, 2024
-                                </p>
-                            </div>
+                    <div class="exhibit bg-gray-50 p-8">
+                        <div class="aspect-square flex flex-col justify-center items-center">
+                            <pre class="text-xs text-gray-400">
+const compose = (f, g) => x => f(g(x));</pre>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium">Compose</h3>
+                            <p class="text-xs text-gray-500 mt-1">2024</p>
                         </div>
                     </div>
                     
                     <!-- Exhibit 3 -->
-                    <div class="exhibit rounded-lg p-8 relative overflow-hidden">
-                        <div class="aspect-[4/5] flex flex-col justify-between relative z-10">
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs text-space-muted uppercase tracking-wider">03</span>
-                                <span class="text-xs text-space-muted">Identity</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-center my-10">
-                                <span class="text-6xl font-mono font-bold text-space-accent opacity-30">0x63</span>
-                            </div>
-                            
-                            <div>
-                                <h3 class="text-xl font-medium text-space-light">Hexadecimal</h3>
-                                <p class="text-sm text-space-muted mt-2">
-                                    Binary expression, 2022
-                                </p>
-                            </div>
+                    <div class="exhibit bg-gray-50 p-8">
+                        <div class="aspect-square flex flex-col justify-center items-center">
+                            <span class="text-4xl text-gray-300">0x63</span>
                         </div>
-                    </div>
-                    
-                    <!-- Exhibit 4: Featured Quote -->
-                    <div class="exhibit rounded-lg p-8 relative overflow-hidden">
-                        <div class="aspect-[4/5] flex flex-col justify-center relative z-10">
-                            <blockquote class="text-xl md:text-2xl text-space-light italic text-center">
-                                "In the silence between keystrokes,<br>
-                                elegance emerges."
-                            </blockquote>
-                            <p class="text-center text-space-muted text-sm mt-6">— Programming Philosophy</p>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium">Hexadecimal</h3>
+                            <p class="text-xs text-gray-500 mt-1">2022</p>
                         </div>
                     </div>
                 </div>
@@ -247,35 +108,20 @@
         </section>
         
         <!-- Contact Section -->
-        <section id="contact" class="py-24 px-6 md:px-16 bg-space-blue">
-            <div class="max-w-5xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-12">
-                    <div class="md:w-1/2">
-                        <h2 class="text-3xl font-bold text-space-light mb-4">Connect</h2>
-                        <div class="h-px w-12 bg-space-accent mb-6"></div>
-                        <p class="text-space-muted max-w-md">
-                            Interested in collaboration or discussion? 
-                            Reach out through the following channels.
-                        </p>
+        <section class="py-24 px-6 md:px-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row justify-between">
+                    <div class="md:w-1/3 mb-8 md:mb-0">
+                        <h2 class="text-2xl font-light mb-4">Contact</h2>
+                        <div class="h-px w-16 bg-black opacity-20 mb-8"></div>
                     </div>
                     
-                    <div class="md:w-1/2">
-                        <div class="bg-space-dark p-8 rounded-lg border border-space-blue hover-glow transition-all">
-                            <div class="space-y-6">
-                                <a href="mailto:root39293@gmail.com" class="flex items-center group">
-                                    <div class="w-10 h-10 rounded-full bg-space-blue flex items-center justify-center mr-4">
-                                        <i class="fas fa-envelope text-space-accent"></i>
-                                    </div>
-                                    <span class="text-space-light group-hover:text-space-accent transition-colors">root39293@gmail.com</span>
-                                </a>
-                                
-                                <a href="https://github.com/Lambda0x63" target="_blank" class="flex items-center group">
-                                    <div class="w-10 h-10 rounded-full bg-space-blue flex items-center justify-center mr-4">
-                                        <i class="fab fa-github text-space-accent"></i>
-                                    </div>
-                                    <span class="text-space-light group-hover:text-space-accent transition-colors">github.com/Lambda0x63</span>
-                                </a>
-                            </div>
+                    <div class="md:w-2/3">
+                        <div class="mb-6">
+                            <a href="mailto:root39293@gmail.com" class="text-gray-900 hover:underline">root39293@gmail.com</a>
+                        </div>
+                        <div>
+                            <a href="https://github.com/Lambda0x63" target="_blank" class="text-gray-900 hover:underline">github.com/Lambda0x63</a>
                         </div>
                     </div>
                 </div>
@@ -284,84 +130,26 @@
     </main>
     
     <!-- Footer -->
-    <footer class="py-10 px-6 border-t border-space-blue">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-            <div class="text-space-muted text-sm mb-4 md:mb-0">
-                © 2025 Lambda0x63. All rights reserved.
-            </div>
-            
-            <div class="flex space-x-6">
-                <a href="#about" class="text-space-muted hover:text-space-accent text-sm transition-colors">About</a>
-                <a href="#gallery" class="text-space-muted hover:text-space-accent text-sm transition-colors">Gallery</a>
-                <a href="#contact" class="text-space-muted hover:text-space-accent text-sm transition-colors">Contact</a>
-            </div>
-        </div>
+    <footer class="py-6 px-6 text-center text-sm text-gray-500">
+        © 2025
     </footer>
     
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Create starfield
-            const starfield = document.getElementById('starfield');
-            const starsCount = 100;
-            
-            for (let i = 0; i < starsCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
+        // Simple scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
                 
-                // Random position
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
                 
-                // Random size (1-3px)
-                const size = Math.random() * 2 + 1;
-                
-                // Random duration and delay for twinkling
-                const duration = (Math.random() * 4 + 3) + 's';
-                const delay = (Math.random() * 5) + 's';
-                
-                star.style.left = `${x}%`;
-                star.style.top = `${y}%`;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.setProperty('--duration', duration);
-                star.style.setProperty('--delay', delay);
-                
-                starfield.appendChild(star);
-            }
-            
-            // Smooth scroll for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 70, // Account for fixed header
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Fade in animations
-            const fadeElements = document.querySelectorAll('.fade-in');
-            fadeElements.forEach(el => {
-                el.style.opacity = '1';
-            });
-            
-            // Subtle parallax effect on scroll
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                const exhibits = document.querySelectorAll('.exhibit');
-                
-                exhibits.forEach((exhibit, index) => {
-                    const speed = 0.03 + (index * 0.01);
-                    exhibit.style.transform = `translateY(${scrollY * speed}px)`;
-                });
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
     </script>
