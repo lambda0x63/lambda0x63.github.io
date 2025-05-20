@@ -3,58 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lambda0x63</title>
+    <title>류동윤 | 개발자 포트폴리오</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Noto Sans KR', 'sans-serif'],
                     },
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF',
+                        accent: '#DBEAFE',
+                        dark: '#1F2937',
+                    }
                 }
             }
         }
     </script>
     <style>
         body {
-            background-color: #f5f5f5;
+            background-color: #f8fafc;
             color: #1a1a1a;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         
-        .exhibit {
-            transition: transform 0.3s ease;
+        .section-transition {
+            transition: all 0.5s ease;
         }
         
-        .exhibit:hover {
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .skill-badge:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body class="font-sans text-gray-900">
     <!-- Header -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-white">
+    <header class="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="text-lg font-light">Lambda0x63</div>
-            <a href="https://github.com/Lambda0x63" target="_blank" class="text-sm text-gray-500 hover:text-gray-900">GitHub</a>
+            <div class="text-xl font-medium text-primary">류동윤</div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="text-sm text-gray-600 hover:text-primary transition-colors">소개</a>
+                <a href="#skills" class="text-sm text-gray-600 hover:text-primary transition-colors">기술</a>
+                <a href="#leadership" class="text-sm text-gray-600 hover:text-primary transition-colors">리더십</a>
+                <a href="#projects" class="text-sm text-gray-600 hover:text-primary transition-colors">프로젝트</a>
+                <a href="#education" class="text-sm text-gray-600 hover:text-primary transition-colors">교육 경험</a>
+                <a href="#awards" class="text-sm text-gray-600 hover:text-primary transition-colors">수상 경력</a>
+                <a href="#contact" class="text-sm text-gray-600 hover:text-primary transition-colors">연락처</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-600 hover:text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="container mx-auto px-6 py-4 space-y-4">
+                <a href="#about" class="block text-sm text-gray-600 hover:text-primary">소개</a>
+                <a href="#skills" class="block text-sm text-gray-600 hover:text-primary">기술</a>
+                <a href="#leadership" class="block text-sm text-gray-600 hover:text-primary">리더십</a>
+                <a href="#projects" class="block text-sm text-gray-600 hover:text-primary">프로젝트</a>
+                <a href="#education" class="block text-sm text-gray-600 hover:text-primary">교육 경험</a>
+                <a href="#awards" class="block text-sm text-gray-600 hover:text-primary">수상 경력</a>
+                <a href="#contact" class="block text-sm text-gray-600 hover:text-primary">연락처</a>
+            </div>
         </div>
     </header>
     
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="h-screen bg-white flex items-center justify-center px-6">
-            <div class="text-center">
-                <h1 class="text-6xl md:text-8xl font-light mb-6">λ0x63</h1>
-                <div class="h-px w-16 bg-black mx-auto my-8 opacity-20"></div>
-                <p class="text-gray-500 max-w-lg mx-auto font-light">
-                    디지털 미니멀리즘
-                </p>
+        <section id="about" class="pt-32 pb-20 px-6 bg-white">
+            <div class="container mx-auto max-w-6xl">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-12">
+                    <div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden shadow-lg flex-shrink-0">
+                        <img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/c7be9f6d-89d5-4e3c-b77f-5ff0da168391/541833f9-f6c3-42cc-ab9b-6fb2918013f0/profile.png" alt="류동윤 프로필" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-4">류동윤</h1>
+                        <div class="h-1 w-20 bg-primary mb-6"></div>
+                        <p class="text-lg text-gray-700 mb-8 leading-relaxed">
+                            안녕하세요, 문제 해결에 열정을 가진 개발자 류동윤입니다. LLM과 웹 시스템 개발에 관심을 가지고 있으며, 다양한 기업과 기관에서의 교육 경험 및 솔루션 개발을 통해 가치를 전달하는데 주력하고 있습니다.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                            <div class="flex items-center">
+                                <i class="fas fa-graduation-cap text-primary mr-3"></i>
+                                <span>영남대학교 컴퓨터공학 전공</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone text-primary mr-3"></i>
+                                <span>+82-10-6661-7978</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope text-primary mr-3"></i>
+                                <a href="mailto:root39293@gmail.com" class="hover:text-primary transition-colors">root39293@gmail.com</a>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fab fa-github text-primary mr-3"></i>
+                                <a href="https://github.com/lambda0x63" target="_blank" class="hover:text-primary transition-colors">github.com/lambda0x63</a>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="https://github.com/lambda0x63" target="_blank" class="bg-dark hover:bg-gray-800 text-white px-6 py-3 rounded-lg transition-colors flex items-center">
+                                <i class="fab fa-github mr-2"></i> GitHub
+                            </a>
+                            <a href="https://lambda0x99-hp.vercel.app/" target="_blank" class="bg-primary hover:bg-secondary text-white px-6 py-3 rounded-lg transition-colors flex items-center">
+                                <i class="fas fa-globe mr-2"></i> 홈페이지
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         
@@ -131,7 +211,7 @@ const compose = (f, g) => x => f(g(x));</pre>
     
     <!-- Footer -->
     <footer class="py-6 px-6 text-center text-sm text-gray-500">
-        © 2025
+        &copy; 2025
     </footer>
     
     <script>
