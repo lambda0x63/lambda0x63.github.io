@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>류동윤 | 개발자 포트폴리오</title>
+    <title>류동윤 | 포트폴리오</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
@@ -17,25 +17,27 @@
                         sans: ['Noto Sans KR', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#3B82F6', // Blue-600
-                        secondary: '#1D4ED8', // Blue-800
-                        accent: '#DBEAFE', // Blue-100
-                        dark: '#1F2937', // Gray-800
-                        medium: '#4B5563', // Gray-600
-                        light: '#F3F4F6', // Gray-100
-                        textDark: '#111827', // Gray-900
-                        textMedium: '#374151', // Gray-700
-                        textLight: '#6B7280', // Gray-500
+                        'base': '#FFFFFF', // Pure White
+                        'surface': '#F7F7F7', // Off-white/Light Gray
+                        'primary': '#2D3748', // Dark Gray-Blue (Charcoal)
+                        'secondary': '#4A5568', // Medium Gray-Blue
+                        'accent': '#3B82F6', // A calm blue for highlights
+                        'text-main': '#1A202C', // Very Dark Gray (Almost Black)
+                        'text-light': '#718096', // Lighter Gray for less emphasis
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+                    letterSpacing: {
+                        tightest: '-.075em',
+                        tighter: '-.05em',
+                        tight: '-.025em',
+                        normal: '0',
+                        wide: '.025em',
+                        wider: '.05em',
+                        widest: '.1em',
                     },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                    }
+                    transitionTimingFunction: {
+                        'in-expo': 'cubic-bezier(0.95, 0.05, 0.795, 0.035)',
+                        'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+                    },
                 }
             }
         }
@@ -43,463 +45,316 @@
     <style>
         html { scroll-behavior: smooth; }
         body {
-            background-color: var(--tw-bg-light, #F3F4F6);
-            color: var(--tw-text-textDark, #111827);
+            background-color: theme('colors.base');
+            color: theme('colors.text-main');
+            font-weight: 300; /* Lighter default font weight */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        .section {
-            padding-top: 4rem; /* 64px */
-            padding-bottom: 4rem; /* 64px */
+        .section-padding {
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+            padding-top: 4rem; /* py-16 */
+            padding-bottom: 4rem; /* py-16 */
         }
-        @media (min-width: 768px) {
-            .section {
-                padding-top: 6rem; /* 96px */
-                padding-bottom: 6rem; /* 96px */
+        @media (min-width: 768px) { /* md: */
+            .section-padding {
+                padding-left: 3rem; /* md:px-12 */
+                padding-right: 3rem; /* md:px-12 */
+                padding-top: 6rem; /* md:py-24 */
+                padding-bottom: 6rem; /* md:py-24 */
             }
         }
-        .nav-link {
-            @apply text-textMedium hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors;
+        @media (min-width: 1024px) { /* lg: */
+            .section-padding {
+                padding-left: 6rem; /* lg:px-24 */
+                padding-right: 6rem; /* lg:px-24 */
+                padding-top: 8rem; /* lg:py-32 */
+                padding-bottom: 8rem; /* lg:py-32 */
+            }
         }
-        .mobile-nav-link {
-            @apply block text-textMedium hover:text-primary hover:bg-accent px-3 py-2 rounded-md text-base font-medium transition-colors;
+        h1, h2, h3 {
+            font-weight: 500; /* Medium weight for headings */
+            letter-spacing: theme('letterSpacing.tight');
         }
-        .section-title {
-            @apply text-3xl font-bold text-textDark mb-4 text-center;
+        .content-max-width {
+            max-width: 64rem; /* max-w-5xl */
+            margin-left: auto;
+            margin-right: auto;
         }
-        .section-subtitle {
-            @apply text-lg text-textMedium mb-12 text-center max-w-2xl mx-auto;
+        .nav-item {
+            font-size: 0.875rem; /* text-sm */
+            color: theme('colors.secondary');
+            letter-spacing: theme('letterSpacing.wider');
+            transition-property: color;
+            transition-duration: 300ms;
         }
-        .card {
-            @apply bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl;
+        .nav-item:hover {
+            color: theme('colors.primary');
         }
-        .card-content {
-            @apply p-6;
+        .gallery-item {
+            background-color: theme('colors.surface');
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            transition-property: all;
+            transition-duration: 300ms;
+            transition-timing-function: theme('transitionTimingFunction.out-expo');
         }
-        .tag {
-            @apply inline-block bg-accent text-primary text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full;
+        .gallery-item:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-xl */
+            transform: scale(1.02);
         }
-        .link-arrow::after {
-            content: '\\2197'; /* Northeast arrow */
-            @apply inline-block ml-1 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1;
+        @media (min-width: 768px) { /* md: */
+            .gallery-item {
+                padding: 2rem; /* md:p-8 */
+            }
         }
-        .animate-on-scroll {
+        .subtle-link {
+            color: theme('colors.accent');
+            transition-property: color;
+            transition-duration: 200ms;
+        }
+        .subtle-link:hover {
+            color: theme('colors.primary');
+        }
+        .fade-in-on-scroll {
             opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-        .animate-on-scroll.animated {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .fade-in-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body class="font-sans">
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-md">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0">
-                    <a href="#hero" class="text-2xl font-bold text-primary">류동윤 (lambda0x63)</a>
-                </div>
-                <nav class="hidden md:flex items-center space-x-1">
-                    <a href="#about" class="nav-link">소개</a>
-                    <a href="#skills" class="nav-link">기술</a>
-                    <a href="#leadership" class="nav-link">리더십</a>
-                    <a href="#projects" class="nav-link">프로젝트</a>
-                    <a href="#experience" class="nav-link">교육경험</a>
-                    <a href="#awards" class="nav-link">수상</a>
-                    <a href="#contact" class="nav-link">연락처</a>
-                </nav>
-                <div class="md:hidden">
-                    <button id="menu-toggle" class="text-textMedium hover:text-primary focus:outline-none">
-                        <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#about" class="mobile-nav-link">소개</a>
-                <a href="#skills" class="mobile-nav-link">기술</a>
-                <a href="#leadership" class="mobile-nav-link">리더십</a>
-                <a href="#projects" class="mobile-nav-link">프로젝트</a>
-                <a href="#experience" class="mobile-nav-link">교육경험</a>
-                <a href="#awards" class="mobile-nav-link">수상</a>
-                <a href="#contact" class="mobile-nav-link">연락처</a>
+    <header id="header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="content-max-width px-6 h-20 flex justify-between items-center">
+            <a href="#hero" class="text-xl font-medium text-primary tracking-tight">류동윤</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="nav-item">소개</a>
+                <a href="#projects" class="nav-item">프로젝트</a>
+                <a href="#experience" class="nav-item">경험</a>
+                <a href="#contact" class="nav-item">연락처</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-primary focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <main style="padding-top: 80px;"> <!-- Header height -->
+    <!-- Mobile Menu (Hidden by default) -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-base z-40 p-6 md:hidden">
+        <div class="flex justify-end mb-8">
+            <button id="mobile-menu-close-button" class="text-primary focus:outline-none">
+                <i class="fas fa-times text-3xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-6 text-center">
+            <a href="#about" class="text-2xl font-light text-secondary hover:text-primary mobile-nav-link">소개</a>
+            <a href="#projects" class="text-2xl font-light text-secondary hover:text-primary mobile-nav-link">프로젝트</a>
+            <a href="#experience" class="text-2xl font-light text-secondary hover:text-primary mobile-nav-link">경험</a>
+            <a href="#contact" class="text-2xl font-light text-secondary hover:text-primary mobile-nav-link">연락처</a>
+        </nav>
+    </div>
+
+    <main style="padding-top: 5rem;"> <!-- Account for fixed header height -->
 
         <!-- Hero Section -->
-        <section id="hero" class="section bg-gradient-to-br from-primary to-secondary text-white min-h-[calc(100vh-80px)] flex items-center justify-center">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center animate-on-scroll">
-                <img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/c7be9f6d-89d5-4e3c-b77f-5ff0da168391/541833f9-f6c3-42cc-ab9b-6fb2918013f0/profile.png" alt="류동윤 프로필" class="w-40 h-40 md:w-48 md:h-48 rounded-full mx-auto mb-8 shadow-2xl border-4 border-white">
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4">류동윤</h1>
-                <p class="text-xl sm:text-2xl text-blue-200 mb-8 max-w-3xl mx-auto">문제 해결에 열정을 가진 개발자. LLM과 웹 시스템 개발에 관심이 많습니다.</p>
-                <div class="flex justify-center space-x-4">
-                    <a href="#projects" class="bg-white text-primary hover:bg-blue-50 px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-transform transform hover:scale-105">프로젝트 보기</a>
-                    <a href="https://github.com/lambda0x63" target="_blank" class="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-transform transform hover:scale-105">
-                        <i class="fab fa-github mr-2"></i> GitHub
-                    </a>
-                </div>
+        <section id="hero" class="min-h-screen flex items-center justify-center section-padding bg-surface">
+            <div class="text-center fade-in-on-scroll">
+                <img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/c7be9f6d-89d5-4e3c-b77f-5ff0da168391/541833f9-f6c3-42cc-ab9b-6fb2918013f0/profile.png" alt="류동윤 프로필" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-8 shadow-xl border-4 border-white">
+                <h1 class="text-4xl md:text-6xl font-medium text-primary mb-3">류동윤</h1>
+                <p class="text-xl md:text-2xl text-secondary font-light mb-10 tracking-tight">문제 해결을 탐구하는 개발자</p>
+                <a href="#about" class="inline-block px-8 py-3 text-primary border border-primary rounded-full hover:bg-primary hover:text-white transition-colors duration-300 text-sm tracking-wider">더 알아보기</a>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="section bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title animate-on-scroll">소개</h2>
-                <p class="section-subtitle animate-on-scroll">다양한 기업과 기관에서의 교육 경험 및 솔루션 개발을 통해 가치를 전달하는데 주력하고 있습니다.</p>
-                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-                    <div class="animate-on-scroll">
-                        <h3 class="text-2xl font-semibold text-textDark mb-4">Contact & Info</h3>
-                        <ul class="space-y-3 text-textMedium">
-                            <li><i class="fas fa-graduation-cap w-6 text-primary"></i> 영남대학교 컴퓨터공학 전공</li>
-                            <li><i class="fas fa-phone w-6 text-primary"></i> +82-10-6661-7978</li>
-                            <li><i class="fas fa-envelope w-6 text-primary"></i> <a href="mailto:root39293@gmail.com" class="hover:text-primary hover:underline">root39293@gmail.com</a></li>
-                            <li><i class="fab fa-github w-6 text-primary"></i> <a href="https://github.com/lambda0x63" target="_blank" class="hover:text-primary hover:underline link-arrow group">lambda0x63</a></li>
-                            <li><i class="fas fa-globe w-6 text-primary"></i> <a href="https://lambda0x99-hp.vercel.app/" target="_blank" class="hover:text-primary hover:underline link-arrow group">lambda0x99-hp.vercel.app</a></li>
-                        </ul>
-                         <div class="mt-6">
-                            <h4 class="text-lg font-semibold text-textDark mb-2">Organizations</h4>
-                            <span class="tag">@Yumeta-Lab</span>
-                            <span class="tag">@poweredlab</span>
-                        </div>
-                    </div>
-                    <div class="animate-on-scroll md:order-first">
-                         <img src="https://ghchart.rshah.org/2563EB/lambda0x63" alt="lambda0x63's Github chart" class="rounded-lg shadow-lg w-full"/>
-                         <p class="text-xs text-textLight mt-2 text-center">lambda0x63's GitHub Contributions</p>
-                    </div>
+        <section id="about" class="section-padding">
+            <div class="content-max-width grid md:grid-cols-3 gap-12 items-start">
+                <div class="md:col-span-2 fade-in-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-medium text-primary mb-6">소개</h2>
+                    <p class="text-lg text-text-main leading-relaxed mb-6 font-light">
+                        안녕하세요, LLM과 웹 시스템 개발에 깊은 관심을 가지고 문제 해결에 열정을 다하는 개발자 류동윤입니다. 다양한 기업 및 기관과의 협력을 통해 교육과 솔루션 개발 분야에서 실질적인 가치를 창출하고자 노력하고 있습니다.
+                    </p>
+                    <p class="text-text-light font-light">
+                        기술을 통해 아이디어를 현실로 만들고, 복잡한 문제에 대한 창의적이고 효율적인 해답을 찾는 과정에서 큰 보람을 느낍니다.
+                    </p>
+                </div>
+                <div class="md:col-span-1 fade-in-on-scroll" style="transition-delay: 0.2s;">
+                    <h3 class="text-xl font-medium text-primary mb-4">Info</h3>
+                    <ul class="space-y-2 text-sm text-text-main font-light">
+                        <li><i class="fas fa-graduation-cap w-5 mr-2 text-secondary"></i>영남대학교 컴퓨터공학</li>
+                        <li><i class="fas fa-envelope w-5 mr-2 text-secondary"></i><a href="mailto:root39293@gmail.com" class="subtle-link">root39293@gmail.com</a></li>
+                        <li><i class="fab fa-github w-5 mr-2 text-secondary"></i><a href="https://github.com/lambda0x63" target="_blank" class="subtle-link">github.com/lambda0x63</a></li>
+                        <li><i class="fas fa-globe w-5 mr-2 text-secondary"></i><a href="https://lambda0x99-hp.vercel.app/" target="_blank" class="subtle-link">Homepage</a></li>
+                        <li><i class="fas fa-phone w-5 mr-2 text-secondary"></i>+82-10-6661-7978</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Skills Section -->
-        <section id="skills" class="section bg-light">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title animate-on-scroll">기술 스택</h2>
-                <p class="section-subtitle animate-on-scroll">제가 주로 다루는 기술과 도구들입니다.</p>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-4xl mx-auto">
-                    {[('Python', 'fab fa-python text-yellow-400'), ('Node.js', 'fab fa-node-js text-green-500'), ('TypeScript', 'fab fa-js-square text-blue-500'), ('SvelteKit', 'fas fa-cogs text-orange-600'), ('LLM', 'fas fa-brain text-purple-500'), ('RAG', 'fas fa-layer-group text-teal-500'), ('FastAPI', 'fas fa-bolt text-green-600'), ('VSCode', 'fas fa-code text-blue-600')].map(skill => (
-                    <div key={skill[0]} class="card animate-on-scroll">
-                        <div class="card-content text-center">
-                            <i class={`${skill[1]} ${skill[0] === 'Python' ? 'text-yellow-400' : skill[0] === 'Node.js' ? 'text-green-500' : skill[0] === 'TypeScript' ? 'text-blue-500' : skill[0] === 'SvelteKit' ? 'text-orange-600' : skill[0] === 'LLM' ? 'text-purple-500' : skill[0] === 'RAG' ? 'text-teal-500' : skill[0] === 'FastAPI' ? 'text-green-600' : 'text-blue-600'} text-4xl mb-3`}></i>
-                            <h3 class="text-lg font-semibold text-textDark">{skill[0]}</h3>
-                        </div>
-                    </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-
-        <!-- Leadership Section -->
-        <section id="leadership" class="section bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title animate-on-scroll">리더십 경험</h2>
-                <div class="max-w-3xl mx-auto space-y-6">
-                    {[
-                        { title: '前 YUMC 회장', org: '영남대학교 메타버스/AI 동아리', link: 'http://www.yuclub.co.kr/file/club_detail_view.php?cs_ancestor=2&cs_mkey=2&cateno=9&no=109' },
-                        { title: '前 개발 총괄', org: '전국 대학 메타버스 연합회(Unimeta)', link: 'https://www.mk.co.kr/news/society/10441095' }
-                    ].map(item => (
-                    <div key={item.title} class="card animate-on-scroll">
-                        <div class="card-content md:flex justify-between items-center">
-                            <div>
-                                <h3 class="text-xl font-semibold text-primary mb-1">{item.title}</h3>
-                                <p class="text-textMedium">{item.org}</p>
-                            </div>
-                            <a href={item.link} target="_blank" class="mt-3 md:mt-0 inline-block bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-secondary transition-colors link-arrow group">관련기사</a>
-                        </div>
-                    </div>
-                    ))}
+        <!-- Skills Teaser (Minimal) -->
+        <section id="skills-teaser" class="section-padding bg-surface">
+            <div class="content-max-width text-center fade-in-on-scroll">
+                 <h2 class="text-3xl md:text-4xl font-medium text-primary mb-10">핵심 기술</h2>
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-3">
+                    <span class="text-lg text-secondary font-light">Python</span>
+                    <span class="text-lg text-secondary font-light">TypeScript</span>
+                    <span class="text-lg text-secondary font-light">Node.js</span>
+                    <span class="text-lg text-secondary font-light">LLM & RAG</span>
+                    <span class="text-lg text-secondary font-light">SvelteKit</span>
+                    <span class="text-lg text-secondary font-light">FastAPI</span>
                 </div>
             </div>
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="section bg-light">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title animate-on-scroll">프로젝트 및 개발경험</h2>
-                <p class="section-subtitle animate-on-scroll">클릭하여 자세한 내용을 확인해보세요.</p>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {[
-                        { name: 'Bombay', desc: 'RAG 기반 LLM 아키텍처 파이프라인 프레임워크', link: 'https://pypi.org/project/bombay/', tags: ['Python', 'LLM', 'RAG'] },
-                        { name: 'Rocat', desc: 'LLM 추상화 Wrapping 라이브러리', link: 'https://pypi.org/project/rocat/', tags: ['Python', 'LLM'] },
-                        { name: 'GPTable', desc: '한국어 프롬프트 공유 플랫폼', link: 'https://gptable.net/', tags: ['Web', 'Platform'] },
-                        { name: '애드앤미디어', desc: '도서 홈페이지 개발', link: 'https://addand.kr/', tags: ['Web'] },
-                        { name: 'Eternal Library', desc: '생성 AI 기반 전시 웹 서비스', link: 'https://eternal-library.org/', tags: ['AI', 'Web'] },
-                        { name: 'FTP-mini', desc: 'VSCode FTP/SFTP 확장 프로그램', link: 'https://marketplace.visualstudio.com/items?itemName=faith6.ftp-mini', tags: ['VSCode', 'TypeScript'] },
-                        { name: 'Dailypp', desc: 'Osu! 맞춤형 PP 기반 맵 추천 플랫폼', link: 'http://dailypp.vercel.app', tags: ['SvelteKit', 'Web'] },
-                        { name: 'SRT-Hunter', desc: 'SRT 자동예매 Agent', link: 'https://github.com/root39293/srt-hunter', tags: ['Python', 'Automation'] },
-                        { name: 'Bento', desc: 'RAG 기반 AI 챗봇 구축 라이브러리', link: 'https://github.com/lambda0x63/bento', tags: ['Python', 'LLM', 'RAG'] },
-                        { name: 'Live2D Voice Chat', desc: 'Live2D 캐릭터 AI 음성 채팅', link: 'https://github.com/lambda0x63/live2d-voice-chat', tags:['JavaScript', 'AI', 'Live2D']},
-                        { name: '열린협상연구소', desc: '협상 시나리오 생성 AI 개발', tags: ['AI', 'NLP'] },
-                        { name: '영남대학교 독도연구소', desc: '독도학 대사전 시스템 설계 및 구축', tags: ['Web', 'Database'] }
-                    ].map(proj => (
-                    <a href={proj.link || '#'} target={proj.link ? '_blank' : '_self'} key={proj.name} class="block card animate-on-scroll group">
-                        <div class="card-content h-full flex flex-col justify-between">
-                            <div>
-                                <h3 class="text-xl font-semibold text-primary mb-2">{proj.name} {proj.link && <span class="link-arrow"></span>}</h3>
-                                <p class="text-textMedium text-sm mb-3">{proj.desc}</p>
-                            </div>
-                            <div>{proj.tags && proj.tags.map(tag => <span key={tag} class="tag">{tag}</span>)}</div>
-                        </div>
-                    </a>
-                    ))}
+        <section id="projects" class="section-padding">
+            <div class="content-max-width">
+                <h2 class="text-3xl md:text-4xl font-medium text-primary mb-12 text-center fade-in-on-scroll">주요 프로젝트</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="projects-grid-container">
+                    <!-- Project Items will be injected here by JavaScript -->
+                </div>
+                <div class="text-center mt-12 fade-in-on-scroll">
+                    <a href="https://github.com/lambda0x63?tab=repositories" target="_blank" class="text-accent hover:text-primary transition-colors duration-200">더 많은 프로젝트 보기 <i class="fab fa-github ml-1"></i></a>
                 </div>
             </div>
         </section>
 
-        <!-- Teaching Experience Section -->
-        <section id="experience" class="section bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title animate-on-scroll">교육 경험</h2>
-                <p class="section-subtitle animate-on-scroll">다양한 대상에게 AI 및 프로그래밍 교육을 진행했습니다.</p>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="animate-on-scroll">
-                        <h3 class="text-xl font-semibold text-primary mb-4"><i class="fas fa-building mr-2"></i> 기업 교육</h3>
-                        <ul class="space-y-2 list-disc list-inside text-textMedium">
-                            <li>SK (2024, 2025 신입사원 AI Literacy, mySUNI, Home&Service)</li>
-                            <li>롯데케미칼 (MS Copilot 프롬프트엔지니어링)</li>
-                            <li>한국암웨이 (프롬프트엔지니어링 실습)</li>
+        <!-- Experience Section (Leadership & Teaching Combined & Simplified) -->
+        <section id="experience" class="section-padding bg-surface">
+            <div class="content-max-width">
+                <h2 class="text-3xl md:text-4xl font-medium text-primary mb-12 text-center fade-in-on-scroll">주요 경험</h2>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="fade-in-on-scroll">
+                        <h3 class="text-2xl font-medium text-secondary mb-6">리더십</h3>
+                        <ul class="space-y-4 font-light">
+                            <li><strong class="font-medium text-text-main">前 YUMC 회장</strong>, 영남대학교 메타버스/AI 동아리</li>
+                            <li><strong class="font-medium text-text-main">前 개발 총괄</strong>, 전국 대학 메타버스 연합회 (Unimeta)</li>
                         </ul>
                     </div>
-                    <div class="animate-on-scroll">
-                        <h3 class="text-xl font-semibold text-primary mb-4"><i class="fas fa-university mr-2"></i> 대학/기관 교육</h3>
-                        <ul class="space-y-2 list-disc list-inside text-textMedium">
-                            <li>경북대학교 (AI 리빙랩 파이썬/데이터 분석 주강사)</li>
-                            <li>성균관대학교 (프롬프트엔지니어링 창업 아카데미)</li>
-                            <li>호서대학교 (교수진 ChatGPT 역량 강화)</li>
-                            <li>한국전파진흥협회(RAPA) (메타버스/LLM 프롬프트)</li>
-                            <li>글로벌핀테크산업진흥센터 (ChatGPT 중/고급, API 특강)</li>
-                            <li>한국여성공학기술인협회 (ChatGPT & NoCode AI)</li>
-                            <li>원광대학교 (AI 기반 포트폴리오 개발)</li>
-                            <li>계명대학교 (프롬프트엔지니어링, 데이터분석, GenAI 해커톤 멘토)</li>
-                        </ul>
+                    <div class="fade-in-on-scroll" style="transition-delay: 0.2s;">
+                        <h3 class="text-2xl font-medium text-secondary mb-6">교육</h3>
+                        <p class="text-text-main font-light mb-2">SK, 롯데케미칼, 한국암웨이 등 기업 대상 AI/프롬프트 교육 다수 진행.</p>
+                        <p class="text-text-main font-light">경북대학교, 성균관대학교, RAPA 등 대학/기관 대상 AI 및 개발 강의 다수 진행.</p>
                     </div>
-                    <div class="animate-on-scroll">
-                        <h3 class="text-xl font-semibold text-primary mb-4"><i class="fas fa-child mr-2"></i> 청소년 교육</h3>
-                        <ul class="space-y-2 list-disc list-inside text-textMedium">
-                            <li>남양주 심석고등학교 (프롬프트엔지니어링/API)</li>
-                            <li>대구 남구 교육청 (메타버스/AI 멘토링 캠프)</li>
-                            <li>대구 수성구 문화의집 (컴퓨터공학 전공 멘토)</li>
-                        </ul>
-                    </div>
+                </div>
+                 <div class="mt-10 text-center fade-in-on-scroll">
+                     <h3 class="text-2xl font-medium text-secondary mb-6">수상</h3>
+                     <ul class="space-y-3 font-light max-w-xl mx-auto">
+                         <li><strong class="font-medium text-text-main">2023 문화재청 국가유산 디지털 콘텐츠 경진대회 최우수상</strong> (HeritageGPT)</li>
+                         <li><strong class="font-medium text-text-main">2022 경상북도 콘텐츠코리아랩 메타버스 해커톤 대상</strong> (AI 교육 플랫폼)</li>
+                     </ul>
                 </div>
             </div>
         </section>
-
-        <!-- Awards Section -->
-        <section id="awards" class="section bg-light">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="section-title animate-on-scroll">수상 경력</h2>
-                <div class="max-w-3xl mx-auto space-y-6">
-                     {[
-                        { name: '2022 경상북도 콘텐츠코리아랩 메타버스 해커톤 대상', desc: 'AI 기반 맞춤형 교육 플랫폼 IR', link: 'https://www.gbckl.kr:2017/home2020/sub5/sub3.asp?bseq=4&cat=-1&sk=&sv=&yy=&page=4&mode=view&aseq=2298' },
-                        { name: '2023 문화재청 국가유산 디지털 콘텐츠 경진대회 최우수상', desc: 'HeritageGPT - 생성형 AI 기반 문화유산 콘텐츠 개발 플랫폼', link: 'https://www.segye.com/newsView/20230926509473' }
-                    ].map(award => (
-                    <a href={award.link} target="_blank" key={award.name} class="block card animate-on-scroll group">
-                        <div class="card-content">
-                            <h3 class="text-xl font-semibold text-primary mb-1 group-hover:underline">{award.name} <span class="link-arrow"></span></h3>
-                            <p class="text-textMedium">{award.desc}</p>
-                        </div>
-                    </a>
-                    ))}
-                </div>
-            </div>
-        </section>
-
+        
         <!-- Contact Section -->
-        <section id="contact" class="section bg-dark text-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl font-bold mb-4 animate-on-scroll">Contact Me</h2>
-                <p class="text-lg text-gray-300 mb-10 animate-on-scroll">언제든지 편하게 연락주세요. 함께 멋진 것을 만들어봐요!</p>
-                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 animate-on-scroll">
-                    <a href="mailto:root39293@gmail.com" class="inline-flex items-center text-lg bg-primary hover:bg-secondary text-white px-6 py-3 rounded-lg transition-colors">
-                        <i class="fas fa-envelope mr-2"></i> Email Me
-                    </a>
-                    <a href="https://github.com/lambda0x63" target="_blank" class="inline-flex items-center text-lg border-2 border-primary hover:bg-primary text-white px-6 py-3 rounded-lg transition-colors">
-                        <i class="fab fa-github mr-2"></i> Visit GitHub
-                    </a>
-                     <a href="tel:+821066617978" class="inline-flex items-center text-lg border-2 border-gray-400 hover:bg-gray-400 hover:text-dark text-white px-6 py-3 rounded-lg transition-colors">
-                        <i class="fas fa-phone mr-2"></i> Call Me
-                    </a>
+        <section id="contact" class="section-padding">
+            <div class="content-max-width text-center fade-in-on-scroll">
+                <h2 class="text-3xl md:text-4xl font-medium text-primary mb-6">연락처</h2>
+                <p class="text-xl text-secondary font-light mb-10 max-w-lg mx-auto">함께 만들고 싶은 것이 있거나, 궁금한 점이 있다면 언제든지 연락주세요.</p>
+                <a href="mailto:root39293@gmail.com" class="inline-block bg-primary text-white px-10 py-4 rounded-lg hover:bg-secondary transition-colors duration-300 text-lg font-medium tracking-wide">
+                    <i class="fas fa-envelope mr-2"></i> 이메일 보내기
+                </a>
+                <div class="mt-10">
+                     <a href="https://github.com/lambda0x63" target="_blank" class="text-secondary hover:text-primary mx-3 transition-colors duration-200"><i class="fab fa-github text-2xl"></i></a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="py-8 px-4 text-center bg-textDark text-gray-400">
-        <p>&copy; {new Date().getFullYear()} 류동윤 (lambda0x63). All Rights Reserved.</p>
+    <footer class="text-center py-10 border-t border-surface">
+        <p class="text-sm text-text-light font-light">&copy; ${new Date().getFullYear()} 류동윤 (lambda0x63). All rights reserved.</p>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.querySelectorAll('#mobile-menu a, header nav a[href^="#"], header > div > div > a[href^="#"]');
-
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
-            menuToggle.setAttribute('aria-expanded', !isExpanded);
-            // Change icon on toggle
-            menuToggle.innerHTML = mobileMenu.classList.contains('hidden') ? 
-                '<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>' :
-                '<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>';
+        // Sticky Header
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-white/90', 'shadow-lg', 'backdrop-blur-md');
+            } else {
+                header.classList.remove('bg-white/90', 'shadow-lg', 'backdrop-blur-md');
+            }
         });
 
-        // Close mobile menu on link click
-        navLinks.forEach(link => {
+        // Mobile Menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = mobileMenu.querySelectorAll('.mobile-nav-link');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
+        });
+        mobileMenuCloseButton.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        mobileNavLinks.forEach(link => {
             link.addEventListener('click', () => {
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                     menuToggle.innerHTML = '<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>';
-                }
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
             });
         });
         
-        // Animate on scroll
+        // Fade in on scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    observer.unobserve(entry.target); // Optional: stop observing after animation
+                    entry.target.classList.add('is-visible');
                 }
             });
-        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+        document.querySelectorAll('.fade-in-on-scroll').forEach(el => {
             observer.observe(el);
         });
 
-        // Replace {[{ ... }]} with JSX-like syntax for skills, leadership, projects, awards for static site generation
-        // This is a placeholder for actual templating if this were a dynamic site. For static HTML, we'll manually expand this.
-        // Since this is a direct HTML edit, I'll manually create the skill items
-        function replaceJsxPlaceholder() {
-            const skillsContainer = document.querySelector('#skills .grid');
-            if (skillsContainer) {
-                const skillsData = [
-                    { name: 'Python', icon: 'fab fa-python', color: 'text-yellow-400' },
-                    { name: 'Node.js', icon: 'fab fa-node-js', color: 'text-green-500' },
-                    { name: 'TypeScript', icon: 'fab fa-js-square', color: 'text-blue-500' }, // Corrected icon for TS
-                    { name: 'SvelteKit', icon: 'fas fa-cogs', color: 'text-orange-600' }, // Using generic icon for SvelteKit
-                    { name: 'LLM', icon: 'fas fa-brain', color: 'text-purple-500' },
-                    { name: 'RAG', icon: 'fas fa-layer-group', color: 'text-teal-500' },
-                    { name: 'FastAPI', icon: 'fas fa-bolt', color: 'text-green-600' },
-                    { name: 'VSCode', icon: 'fas fa-code', color: 'text-blue-600' }
-                ];
-                let skillsHTML = '';
-                skillsData.forEach(skill => {
-                    skillsHTML += `
-                    <div class="card animate-on-scroll">
-                        <div class="card-content text-center">
-                            <i class="${skill.icon} ${skill.color} text-4xl mb-3"></i>
-                            <h3 class="text-lg font-semibold text-textDark">${skill.name}</h3>
-                        </div>
-                    </div>`;
-                });
-                skillsContainer.innerHTML = skillsHTML;
-            }
-
-            const leadershipContainer = document.querySelector('#leadership .space-y-6');
-            if (leadershipContainer) {
-                 const leadershipData = [
-                    { title: '前 YUMC 회장', org: '영남대학교 메타버스/AI 동아리', link: 'http://www.yuclub.co.kr/file/club_detail_view.php?cs_ancestor=2&cs_mkey=2&cateno=9&no=109' },
-                    { title: '前 개발 총괄', org: '전국 대학 메타버스 연합회(Unimeta)', link: 'https://www.mk.co.kr/news/society/10441095' }
-                ];
-                let leadershipHTML = '';
-                leadershipData.forEach(item => {
-                    leadershipHTML += `
-                    <div class="card animate-on-scroll">
-                        <div class="card-content md:flex justify-between items-center">
-                            <div>
-                                <h3 class="text-xl font-semibold text-primary mb-1">${item.title}</h3>
-                                <p class="text-textMedium">${item.org}</p>
-                            </div>
-                            <a href="${item.link}" target="_blank" class="mt-3 md:mt-0 inline-block bg-primary text-white px-4 py-2 rounded-md text-sm hover:bg-secondary transition-colors link-arrow group">관련기사</a>
-                        </div>
-                    </div>`;
-                });
-                leadershipContainer.innerHTML = leadershipHTML;
-            }
-            
-            const projectsContainer = document.querySelector('#projects .grid');
-            if (projectsContainer) {
-                 const projectsData = [
-                    { name: 'Bombay', desc: 'RAG 기반 LLM 아키텍처 파이프라인 프레임워크', link: 'https://pypi.org/project/bombay/', tags: ['Python', 'LLM', 'RAG'] },
-                    { name: 'Rocat', desc: 'LLM 추상화 Wrapping 라이브러리', link: 'https://pypi.org/project/rocat/', tags: ['Python', 'LLM'] },
-                    { name: 'GPTable', desc: '한국어 프롬프트 공유 플랫폼', link: 'https://gptable.net/', tags: ['Web', 'Platform'] },
-                    { name: '애드앤미디어', desc: '도서 홈페이지 개발', link: 'https://addand.kr/', tags: ['Web'] },
-                    { name: 'Eternal Library', desc: '생성 AI 기반 전시 웹 서비스', link: 'https://eternal-library.org/', tags: ['AI', 'Web'] },
-                    { name: 'FTP-mini', desc: 'VSCode FTP/SFTP 확장 프로그램', link: 'https://marketplace.visualstudio.com/items?itemName=faith6.ftp-mini', tags: ['VSCode', 'TypeScript'] },
-                    { name: 'Dailypp', desc: 'Osu! 맞춤형 PP 기반 맵 추천 플랫폼', link: 'http://dailypp.vercel.app', tags: ['SvelteKit', 'Web'] }, // Corrected tag
-                    { name: 'SRT-Hunter', desc: 'SRT 자동예매 Agent', link: 'https://github.com/root39293/srt-hunter', tags: ['Python', 'Automation'] },
-                    { name: 'Bento', desc: 'RAG 기반 AI 챗봇 구축 라이브러리', link: 'https://github.com/lambda0x63/bento', tags: ['Python', 'LLM', 'RAG'] },
-                    { name: 'Live2D Voice Chat', desc: 'Live2D 캐릭터 AI 음성 채팅', link: 'https://github.com/lambda0x63/live2d-voice-chat', tags:['JavaScript', 'AI', 'Live2D']},
-                    { name: '열린협상연구소', desc: '협상 시나리오 생성 AI 개발', tags: ['AI', 'NLP'] },
-                    { name: '영남대학교 독도연구소', desc: '독도학 대사전 시스템 설계 및 구축', tags: ['Web', 'Database'] }
-                ];
-                let projectsHTML = '';
-                projectsData.forEach(proj => {
-                    projectsHTML += `
-                    <a href="${proj.link || '#'}" target="${proj.link ? '_blank' : '_self'}" class="block card animate-on-scroll group">
-                        <div class="card-content h-full flex flex-col justify-between">
-                            <div>
-                                <h3 class="text-xl font-semibold text-primary mb-2">${proj.name} ${proj.link ? '<span class="link-arrow"></span>' : ''}</h3>
-                                <p class="text-textMedium text-sm mb-3">${proj.desc}</p>
-                            </div>
-                            <div>${proj.tags && proj.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
-                        </div>
-                    </a>`;
-                });
-                projectsContainer.innerHTML = projectsHTML;
-            }
-
-            const awardsContainer = document.querySelector('#awards .space-y-6');
-            if(awardsContainer) {
-                const awardsData = [
-                    { name: '2022 경상북도 콘텐츠코리아랩 메타버스 해커톤 대상', desc: 'AI 기반 맞춤형 교육 플랫폼 IR', link: 'https://www.gbckl.kr:2017/home2020/sub5/sub3.asp?bseq=4&cat=-1&sk=&sv=&yy=&page=4&mode=view&aseq=2298' },
-                    { name: '2023 문화재청 국가유산 디지털 콘텐츠 경진대회 최우수상', desc: 'HeritageGPT - 생성형 AI 기반 문화유산 콘텐츠 개발 플랫폼', link: 'https://www.segye.com/newsView/20230926509473' }
-                ];
-                let awardsHTML = '';
-                awardsData.forEach(award => {
-                    awardsHTML += `
-                    <a href="${award.link}" target="_blank" class="block card animate-on-scroll group">
-                        <div class="card-content">
-                            <h3 class="text-xl font-semibold text-primary mb-1 group-hover:underline">${award.name} <span class="link-arrow"></span></h3>
-                            <p class="text-textMedium">${award.desc}</p>
-                        </div>
-                    </a>`;
-                });
-                awardsContainer.innerHTML = awardsHTML;
-            }
-            
-            // Update footer year
+        document.addEventListener('DOMContentLoaded', () => {
             const footer = document.querySelector('footer p');
             if (footer) {
-                footer.textContent = footer.textContent.replace('${new Date().getFullYear()}', new Date().getFullYear());
+                footer.innerHTML = footer.innerHTML.replace(/\$\{\s*new Date\(\)\.getFullYear\(\)\s*\}/, new Date().getFullYear());
             }
-        }
-        
-        // Run the replacement function when the DOM is ready
-        document.addEventListener('DOMContentLoaded', replaceJsxPlaceholder);
+            
+            const projectsContainer = document.getElementById('projects-grid-container');
+            if (projectsContainer) {
+                const projectsData = [
+                    { name: 'Bombay', desc: 'RAG LLM 파이프라인 프레임워크', link: 'https://pypi.org/project/bombay/', tags: ['Python', 'LLM'] },
+                    { name: 'Rocat', desc: 'LLM 추상화 Wrapping 라이브러리', link: 'https://pypi.org/project/rocat/', tags: ['Python', 'LLM'] },
+                    { name: 'GPTable', desc: '한국어 프롬프트 공유 플랫폼', link: 'https://gptable.net/', tags: ['Web', 'AI'] },
+                    { name: 'FTP-mini', desc: 'VSCode FTP/SFTP 확장', link: 'https://marketplace.visualstudio.com/items?itemName=faith6.ftp-mini', tags: ['TypeScript', 'VSCode'] },
+                    { name: 'Dailypp', desc: 'Osu! 맵 추천 플랫폼', link: 'http://dailypp.vercel.app', tags: ['SvelteKit', 'Web'] },
+                    { name: 'Bento', desc: 'RAG AI 챗봇 라이브러리', link: 'https://github.com/lambda0x63/bento', tags: ['Python', 'AI'] },
+                ];
+                let projectsHTML = '';
+                projectsData.forEach((proj, index) => {
+                    projectsHTML += `
+                    <div class="gallery-item fade-in-on-scroll" style="transition-delay: ${index * 0.1}s">
+                        <h3 class="text-xl font-medium text-primary mb-2">${proj.name}</h3>
+                        <p class="text-sm text-text-light mb-4 font-light h-10">${proj.desc}</p>
+                        <div class="mb-4">
+                            ${proj.tags.map(tag => `<span class="inline-block bg-accent/10 text-accent text-xs font-medium mr-2 px-2.5 py-1 rounded-full">${tag}</span>`).join('')}
+                        </div>
+                        ${proj.link ? `<a href="${proj.link}" target="_blank" class="text-sm text-accent hover:text-primary font-medium transition-colors duration-200 group">더보기 <i class="fas fa-arrow-right text-xs ml-1 transform group-hover:translate-x-1 transition-transform"></i></a>` : ''}
+                    </div>`;
+                });
+                projectsContainer.innerHTML = projectsHTML;
 
+                projectsContainer.querySelectorAll('.fade-in-on-scroll').forEach(el => {
+                    observer.observe(el); // Observe newly added elements
+                });
+            }
+        });
     </script>
 </body>
 </html>
